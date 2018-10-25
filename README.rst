@@ -26,7 +26,7 @@ To run the plotting script, you will need matplotlib:
 ``pip install matplotlib``
 
 And finally, to run the classifier you will need PyTorch. You can download
-it by looking at the documentation here: `<https://github.com/pytorch/pytorch>`
+it by looking at the documentation here: `https://github.com/pytorch/pytorch`
 
 License
 =======
