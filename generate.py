@@ -64,21 +64,23 @@ def main():
     parser.add_argument('--end', type=float, help='End angle of the arms. A value of 360 corresponds \
                         to a full circle.', default=360)
     parser.add_argument('--noise', type=float, help='Noise for the arms', default=0.5)
+    parser.add_argument('--filename', type=str, help='Name of the file in which to save the dataset',
+                        default='n_arm_spiral')
 
     args = parser.parse_args()
 
     # Create a list of the angles at which to rotate the arms.
     # Either we find the angles automatically by dividing by the number of arms
     # Or we just use the angle given by the user.
+    classes = np.empty((0, 3))
     angles = [((360 / args.arms) if args.auto_angle else args.angle) * i for i in range(args.arms)]
 
     for i, angle in enumerate(angles):
         points = generate_spiral(args.count, args.start, args.end, angle, args.noise)
-        classified_points = np.hstack((points, np.full((3000,1), i+1)))
+        classified_points = np.hstack((points, np.full((args.count, 1), i+1)))
+        classes = np.concatenate((classes, classified_points))
 
-        plt.plot(points[:, 0], points[:, 1], '.', str(i))
-
-    plt.show()
+    np.savetxt(args.filename + '.csv', classes, fmt=['%10.15f', '%10.15f', '%i'], delimiter=';')
 
 if __name__ == '__main__':
     main()
