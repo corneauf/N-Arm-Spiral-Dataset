@@ -18,9 +18,8 @@ function to the hidden layer (a Rectified Linear Unit, or ReLU for short).
 Installation
 ============
 
-To build the dataset you only need numpy and scipy which you can install by
-running :
-``pip install numpy scipy``
+To build the dataset you only need numpy which you can install by running:
+``pip install numpy``
 
 To run the plotting script, you will need matplotlib:
 ``pip install matplotlib``
