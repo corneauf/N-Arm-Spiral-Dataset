@@ -13,6 +13,22 @@ class LinearMLP(nn.Module):
     This aims at providing a visual interpretation of why linear models cannot
     classify data that follow a non-linear distribution and why stacking more
     linear functions on top of other linear functions does not help the classification.
+
+    Parameters
+    ----------
+    classes: list
+        Name of the different classes.
+    hidden_layers: int, optional
+        Number of hidden layers to have. Default is 1.
+    hidden_units: int, optional
+        Number of hidden units at the first hidden layer.
+
+    Notes
+    -----
+    - The value of `hidden_layers` must be stricly greater than 0.
+    - The value of `hidden_units` must be a power of two.
+    - The number of hidden units at layer :math:`n` is given by 
+    :math:`$$\frac{hidden_units}{2^{n}}$$`
     """
     
     def __init__(self, classes, hidden_layers=1, hidden_units=128):
@@ -45,6 +61,23 @@ class NonLinearMLP(nn.Module):
     for the hidden layers as well as incorporating a nonlinearality through the use
     of `torch.nn.ReLU`. It can be *shallow* (only a single hidden layer) or *deep*
     (a stricly greater than one number of hidden layers).
+
+
+    Parameters
+    ----------
+    classes: list
+        Name of the different classes.
+    hidden_layers: int, optional
+        Number of hidden layers to have. Default is 1.
+    hidden_units: int, optional
+        Number of hidden units at the first hidden layer.
+
+    Notes
+    -----
+    - The value of `hidden_layers` must be stricly greater than 0.
+    - The value of `hidden_units` must be a power of two.
+    - The number of hidden units at layer :math:`n` is given by 
+    :math:`$$\frac{hidden_units}{2^{n}}$$`
     """
     
     def __init__(self, classes, hidden_layers=1, hidden_units=128):
