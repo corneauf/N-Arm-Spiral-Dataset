@@ -78,6 +78,7 @@ def main():
 
     train_model(model, train_dataset, device, args)
     test_model(model, test_dataset)
+    torch.save(model.state_dict(), args.linear_file)
 
     print('#### Training shallow nonlinear model')
     model = NonLinearMLP(train_dataset.classes)
@@ -86,6 +87,7 @@ def main():
 
     train_model(model, train_dataset, device, args)
     test_model(model, test_dataset)
+    torch.save(model.state_dict(), args.nonlinear_file)
 
 if __name__ == '__main__':
     main()
