@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import argparse
 import math
-import matplotlib.pyplot as plt
 import numpy as np
 
 def rotate_point(point, angle):
@@ -77,7 +76,7 @@ def main():
 
     for i, angle in enumerate(angles):
         points = generate_spiral(args.count, args.start, args.end, angle, args.noise)
-        classified_points = np.hstack((points, np.full((args.count, 1), i+1)))
+        classified_points = np.hstack((points, np.full((args.count, 1), i)))
         classes = np.concatenate((classes, classified_points))
 
     np.savetxt(args.filename + '.csv', classes, fmt=['%10.15f', '%10.15f', '%i'], delimiter=';')
