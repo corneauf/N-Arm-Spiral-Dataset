@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import argparse
 import matplotlib.pyplot as plt
+from mlxtend.plotting import plot_decision_regions
 import numpy as np
 import torch
 
@@ -8,17 +9,15 @@ from dataset import NArmSpiral
 from models.mlp import LinearMLP, NonLinearMLP
 from torch.utils.data import DataLoader
 
+
 def main():
     parser = argparse.ArgumentParser(description='Plot the n-arm spiral dataset')
     parser.add_argument('filename', type=str, help='Name of the file containing the dataset')
-    parser.add_argument('actions', nargs='+', help='Plot actions to execute', default=['dataset'])
+    parser.add_argument('actions', nargs='+', help='Plot actions to execute')
     parser.add_argument('--linear', action='store_true')
     parser.add_argument('--linear-file', type=str, default='linear_model.pt')
     parser.add_argument('--nonlinear-file', type=str, default='nonlinear_model.pt')
-    parser.add_argument('--hidden-units', type=int, default=128, help='Number of hidden units for \
-    the model')
-    parser.add_argument('--hidden-layers', type=int, default=1, help='Number of hidden layers')
-    
+
     args = parser.parse_args()
 
     n_arm_spiral = NArmSpiral(args.filename)
@@ -28,6 +27,7 @@ def main():
     for action in args.actions:
         globals()[action](n_arm_spiral, args, model)
         plt.clf()
+
 
 def load_model(classes, args):
     """Load the model from a file
@@ -62,6 +62,7 @@ def load_model(classes, args):
     print(model.eval())
     return model
 
+
 def view_dataset(dataset, args, *unused):
     """Plot the points of a dataset
 
@@ -86,6 +87,7 @@ def view_dataset(dataset, args, *unused):
 
     plt.show()
 
+
 def view_test(dataset, args, model):
     """Plot the test dataset as classified by the model
 
@@ -102,12 +104,13 @@ def view_test(dataset, args, model):
         The model use to classify the test dataset.
     """
     classified = classify_test_data(args, model)
-    
+
     for _class, points in classified.items():
         numpy_points = np.array(points).transpose()
         plt.plot(*numpy_points, '.', str(_class))
-    
+
     plt.show()
+
 
 def classify_test_data(args, model):
     """Classify the test data.
@@ -143,6 +146,7 @@ def classify_test_data(args, model):
             classified[_class].append(point)
 
     return classified
+
 
 if __name__ == '__main__':
     main()

@@ -3,6 +3,7 @@ import argparse
 import math
 import numpy as np
 
+
 def rotate_point(point, angle):
     """Rotate two point by an angle.
 
@@ -21,6 +22,7 @@ def rotate_point(point, angle):
     rotation_matrix = np.array([[np.cos(angle), -np.sin(angle)], [np.sin(angle), np.cos(angle)]])
     rotated_point = rotation_matrix.dot(point)
     return rotated_point
+
 
 def generate_spiral(samples, start, end, angle, noise):
     """Generate a spiral of points.
@@ -41,7 +43,7 @@ def generate_spiral(samples, start, end, angle, noise):
     noise: float
         The noisyness of the points inside the spirals. Needs to be less than 1.
     """
-    # Generate some points from the square root of random data inside an uniform distribution on [0, 1).
+    # Generate points from the square root of random data inside an uniform distribution on [0, 1).
     points = math.radians(start) + np.sqrt(np.random.rand(samples, 1)) * math.radians(end)
 
     # Apply a rotation to the points.
@@ -52,18 +54,20 @@ def generate_spiral(samples, start, end, angle, noise):
     rotated_points = np.column_stack((rotated_x_axis, rotated_y_axis))
     return np.apply_along_axis(rotate_point, 1, rotated_points, math.radians(angle))
 
+
 def main():
     parser = argparse.ArgumentParser(description='Generate n-arm spiral')
     parser.add_argument('count', type=int, help='Number of samples to generate per arm')
     parser.add_argument('--arms', type=int, help='Number of args to generate', default=2)
     parser.add_argument('--angle', type=float, help='Angle between each arm.', default=180)
-    parser.add_argument('--auto-angle', type=bool, help='Automatically choose the angle for the arms',
-                        default=True)
+    parser.add_argument('--auto-angle', type=bool, default=True,
+                        help='Automatically choose the angle for the arms')
     parser.add_argument('--start', type=float, help='Start angle of the arms', default=0)
-    parser.add_argument('--end', type=float, help='End angle of the arms. A value of 360 corresponds \
-                        to a full circle.', default=360)
+    parser.add_argument('--end', type=float, default=360,
+                        help='End angle of the arms. A value of 360 corresponds \
+                              to a full circle.')
     parser.add_argument('--noise', type=float, help='Noise for the arms', default=0.5)
-    parser.add_argument('--filename', type=str, help='Name of the file in which to save the dataset',
+    parser.add_argument('--filename', type=str, help='Name of the file to save the dataset',
                         default='n_arm_spiral')
 
     args = parser.parse_args()
@@ -80,6 +84,7 @@ def main():
         classes = np.concatenate((classes, classified_points))
 
     np.savetxt(args.filename + '.csv', classes, fmt=['%10.15f', '%10.15f', '%i'], delimiter=';')
+
 
 if __name__ == '__main__':
     main()

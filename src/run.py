@@ -8,6 +8,7 @@ from dataset import NArmSpiral
 from models.mlp import LinearMLP, NonLinearMLP
 from torch.utils.data import DataLoader
 
+
 def train_model(model, train_dataset, device, args):
     model.to(device)
     loader = DataLoader(train_dataset, shuffle=True, num_workers=2)
@@ -34,6 +35,7 @@ def train_model(model, train_dataset, device, args):
                 print('[{}, {}] loss: {:.3f}'.format(epoch + 1, i + 1, running_loss / 500))
                 running_loss = 0.0
 
+
 def test_model(model, test_dataset):
     correct = 0
     total = 0
@@ -49,6 +51,7 @@ def test_model(model, test_dataset):
             correct += (predicted == labels).sum().item()
 
     print('Accuracy of the network on the test points: {:.2f}%'.format(100 * correct / total))
+
 
 def main():
     parser = argparse.ArgumentParser(description='Run the different models')
@@ -88,6 +91,7 @@ def main():
     train_model(model, train_dataset, device, args)
     test_model(model, test_dataset)
     torch.save(model.state_dict(), args.nonlinear_file)
+
 
 if __name__ == '__main__':
     main()

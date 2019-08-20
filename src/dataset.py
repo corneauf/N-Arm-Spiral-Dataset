@@ -1,6 +1,7 @@
 import numpy as np
 from torch.utils.data import Dataset
 
+
 class NArmSpiral(Dataset):
     """
     `torch.utils.data.Dataset` subclass for the NArmSpiral dataset
@@ -38,7 +39,7 @@ class NArmSpiral(Dataset):
 
         # We assume the classes have the same amount of samples
         self._sample_count = _samples[0]
-        
+
         # Split the file data into array of each classe
         split_classes = np.split(self._file_data, len(self.classes))
 
